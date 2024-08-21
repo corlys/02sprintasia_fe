@@ -15,11 +15,7 @@ export default function EditSubTaskForm({ subTaskId }: { subTaskId: number }) {
     queryFn: getSubTask,
     queryKey: ["subTask", subTaskId],
   });
-  const { register, handleSubmit, reset } = useForm<SubTaskFormType>({
-    defaultValues: {
-      title: data?.data.subTask.title,
-    },
-  });
+  const { register, handleSubmit, reset } = useForm<SubTaskFormType>();
   const onSubmitTask = handleSubmit((data) =>
     editTaskMutation.mutate({
       title: data.title,

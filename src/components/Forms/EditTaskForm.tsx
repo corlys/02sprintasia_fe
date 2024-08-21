@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import type { TaskFormType, TaskResponse } from "../../types";
@@ -14,12 +15,7 @@ export default function EditTaskForm({ taskId }: { taskId: number }) {
     queryFn: getTask,
     queryKey: ["task", taskId],
   });
-  const { register, handleSubmit } = useForm<TaskFormType>({
-    defaultValues: {
-      title: data?.data.task.title,
-      description: data?.data.task.description,
-    },
-  });
+  const { register, handleSubmit, reset } = useForm<TaskFormType>();
   const onSubmitTask = handleSubmit((data) => editTaskMutation.mutate(data));
   const editTask = async (title: string, description: string) => {
     await axiosClient.post("/tasks/update", {
@@ -41,6 +37,14 @@ export default function EditTaskForm({ taskId }: { taskId: number }) {
       navigate("/");
     },
   });
+  useEffect(() => {
+    if (data?.data.task) {
+      reset({
+        title: data?.data.task.title,
+        description: data?.data.task.description,
+      });
+    }
+  }, [reset, data?.data.task]);
   return (
     <>
       {status === "success" && (
