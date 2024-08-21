@@ -6,6 +6,13 @@ export type Task = {
   createdAt: string;
   updatedAt: string;
   deadline?: string;
+  subTasks: SubTask[];
+};
+
+export type SubTask = {
+  id: number;
+  title: string;
+  completed: boolean;
 };
 
 export type TaskResponse = {
