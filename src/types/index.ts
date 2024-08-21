@@ -15,8 +15,16 @@ export type SubTask = {
   completed: boolean;
 };
 
-export type TaskResponse = {
+export type TasksResponse = {
   tasks: Task[];
+};
+
+export type TaskResponse = {
+  task: Task;
+};
+
+export type SubTaskResponse = {
+  subTask: SubTask;
 };
 
 export type TaskFormType = {
