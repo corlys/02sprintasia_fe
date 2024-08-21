@@ -120,7 +120,9 @@ function App() {
                   </label>
                 )}
                 {task.subTasks.length > 0 && (
-                  <div>{progressPercentage(task.subTasks)} %</div>
+                  <div>
+                    {progressPercentage(task.subTasks)} % {task.status}
+                  </div>
                 )}
               </div>
               <CreateSubTaskForm taskId={task.id} />
