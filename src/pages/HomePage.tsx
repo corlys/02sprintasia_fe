@@ -126,8 +126,17 @@ function App() {
               <CreateSubTaskForm taskId={task.id} />
               {task.subTasks.length > 0 &&
                 task.subTasks.map((subTask) => (
-                  <div className="flex flex-row items-center justify-between w-full">
+                  <div
+                    key={subTask.id}
+                    className="flex flex-row items-center justify-center gap-4 w-full"
+                  >
                     <p className="text-md font-semibold">{subTask.title}</p>
+                    <Link
+                      to={`/subtask/${subTask.id}`}
+                      className="px-4 py-2 border rounded-xl bg-orange-500 hover:bg-orange-400 text-white"
+                    >
+                      Edit
+                    </Link>
                     <button
                       onClick={() => {
                         flipSubTaskMutation.mutate({

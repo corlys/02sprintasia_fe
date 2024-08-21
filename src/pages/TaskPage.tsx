@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import EditTaskForm from "../components/Forms/EditTaskForm";
+import { EditTaskForm } from "../components/Forms";
 
 export default function TaskPage() {
   const { id } = useParams<{ id: string }>();
