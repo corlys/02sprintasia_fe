@@ -19,6 +19,12 @@ function App() {
     });
   };
 
+  const deleteSubTask = async (subTaskId: number) => {
+    await axiosClient.post("/subtasks/delete", {
+      id: subTaskId,
+    });
+  };
+
   const flipTask = async (id: number, currentState: string) => {
     await axiosClient.post("/tasks/update", {
       id,
@@ -35,6 +41,15 @@ function App() {
 
   const deleteTaskMutation = useMutation({
     mutationFn: ({ id }: { id: number }) => deleteTask(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["tasks"],
+      });
+    },
+  });
+
+  const deleteSubTaskMutation = useMutation({
+    mutationFn: ({ id }: { id: number }) => deleteSubTask(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["tasks"],
@@ -141,12 +156,20 @@ function App() {
                     </Link>
                     <button
                       onClick={() => {
+                        deleteSubTaskMutation.mutate({ id: subTask.id });
+                      }}
+                      className="px-4 py-2 border rounded-xl bg-red-500 hover:bg-red-400 text-white"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => {
                         flipSubTaskMutation.mutate({
                           id: subTask.id,
                           currentState: subTask.completed,
                         });
                       }}
-                      className={`rounded-lg text-white px-3 py-2 ${subTask.completed ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"}`}
+                      className={`rounded-lg text-white px-3 py-2 ${subTask.completed ? "bg-green-500 hover:bg-green-400" : "bg-gray-500 hover:bg-gray-400"}`}
                     >
                       {subTask.completed ? "Completed" : "Incomplete"}
                     </button>
