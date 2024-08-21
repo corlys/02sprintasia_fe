@@ -19,7 +19,20 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 items-center justify-center">
+      <div className="flex flex-col gap-4 items-center justify-center mt-10">
+        <div className="min-w-96 border-2 border-sky-50 rounded-lg flex flex-col items-start justify-between p-8 gap-4">
+          <input
+            className="border-2 border-sky-100 rounded p-1 w-full"
+            placeholder="Task Title"
+          />
+          <textarea
+            className="border-2 border-sky-100 rounded p-1 w-full"
+            placeholder="Task Description"
+          />
+          <button className="px-4 py-2 border rounded-xl bg-blue-500 hover:bg-blue-400 text-white self-end">
+            Create Task
+          </button>
+        </div>
         {lists.map((list) => (
           <div
             className="border-2 border-sky-50 rounded-lg flex flex-row items-center justify-between p-8 gap-4"
@@ -31,6 +44,9 @@ function App() {
             </div>
             <button className="px-4 py-2 border rounded-xl bg-red-500 hover:bg-red-400 text-white">
               Delete
+            </button>
+            <button className="px-4 py-2 border rounded-xl bg-orange-500 hover:bg-orange-400 text-white">
+              Edit
             </button>
             <button className="px-4 py-2 border rounded-xl bg-green-500 hover:bg-green-400 text-white">
               Finish
