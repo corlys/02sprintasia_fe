@@ -15,7 +15,7 @@ export default function EditSubTaskForm({ subTaskId }: { subTaskId: number }) {
     queryFn: getSubTask,
     queryKey: ["subTask", subTaskId],
   });
-  const { register, handleSubmit } = useForm<SubTaskFormType>({
+  const { register, handleSubmit, reset } = useForm<SubTaskFormType>({
     defaultValues: {
       title: data?.data.subTask.title,
     },
@@ -39,11 +39,10 @@ export default function EditSubTaskForm({ subTaskId }: { subTaskId: number }) {
     },
   });
   useEffect(() => {
-    console.log("subTaskId changed to ", subTaskId);
-  }, [subTaskId]);
-  useEffect(() => {
-    console.log("title changed to ", data?.data.subTask.title);
-  }, [data?.data.subTask.title]);
+    if (data?.data.subTask.title) {
+      reset({ title: data.data.subTask.title });
+    }
+  }, [data?.data.subTask.title, reset]);
   return (
     <>
       {status === "success" && (
