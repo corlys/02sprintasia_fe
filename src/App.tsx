@@ -1,13 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axiosClient from "./utils/axios";
 import type { SubTask, TaskResponse } from "./types";
+import { TaskForm } from "./components/Forms";
 
 function App() {
   const queryClient = useQueryClient();
+
   const getTasklist = async () => {
     const res = await axiosClient.get<TaskResponse>("/tasks");
     return res.data;
   };
+  const { data } = useQuery("tasks", getTasklist);
 
   const deleteTask = async (id: number) => {
     await axiosClient.post("/tasks/delete", {
@@ -18,7 +21,7 @@ function App() {
   const flipTask = async (id: number, currentState: string) => {
     await axiosClient.post("/tasks/update", {
       id,
-      status: currentState === "finished" ? "ongoing" : "finished",
+      status: currentState === "finished" ? "finished" : "ongoing",
     });
   };
 
@@ -58,8 +61,6 @@ function App() {
     },
   });
 
-  const { data } = useQuery("tasks", getTasklist);
-
   function progressPercentage(subTasks: SubTask[]) {
     if (subTasks.length === 0) return 0;
     const completedCount = subTasks.filter(
@@ -71,20 +72,8 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 items-center justify-center mt-10">
-        <div className="min-w-96 border-2 border-sky-50 rounded-lg flex flex-col items-start justify-between p-8 gap-4">
-          <input
-            className="border-2 border-sky-100 rounded p-1 w-full"
-            placeholder="Task Title"
-          />
-          <textarea
-            className="border-2 border-sky-100 rounded p-1 w-full"
-            placeholder="Task Description"
-          />
-          <button className="px-4 py-2 border rounded-xl bg-blue-500 hover:bg-blue-400 text-white self-end">
-            Create Task
-          </button>
-        </div>
+      <div className="flex flex-col gap-4 items-center justify-center my-10">
+        <TaskForm />
         {data &&
           data.tasks.map((task) => (
             <div
@@ -110,18 +99,21 @@ function App() {
                   Edit
                 </button>
                 {task.subTasks.length === 0 && (
-                  <button
-                    onClick={() => {
-                      flipTaskMutation.mutate({
-                        id: task.id,
-                        currentState:
-                          task.status === "ongoing" ? "finished" : "ongoing",
-                      });
-                    }}
-                    className="px-4 py-2 border rounded-xl bg-green-500 hover:bg-green-400 text-white"
-                  >
-                    Finish
-                  </button>
+                  <label className="inline-flex items-center">
+                    <input
+                      onClick={() => {
+                        flipTaskMutation.mutate({
+                          id: task.id,
+                          currentState:
+                            task.status === "ongoing" ? "finished" : "ongoing",
+                        });
+                      }}
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
+                      checked={task.status === "ongoing" ? false : true}
+                    />
+                    <span className="ml-2 text-gray-700">Check me</span>
+                  </label>
                 )}
                 {task.subTasks.length > 0 && (
                   <div>{progressPercentage(task.subTasks)} %</div>

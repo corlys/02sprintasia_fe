@@ -18,3 +18,8 @@ export type SubTask = {
 export type TaskResponse = {
   tasks: Task[];
 };
+
+export type TaskFormType = {
+  title: string;
+  description: string;
+};
