@@ -23,3 +23,7 @@ export type TaskFormType = {
   title: string;
   description: string;
 };
+
+export type SubTaskFormType = {
+  title: string;
+};

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import axiosClient from "./utils/axios";
 import type { SubTask, TaskResponse } from "./types";
-import { TaskForm } from "./components/Forms";
+import { SubTaskForm, TaskForm } from "./components/Forms";
 
 function App() {
   const queryClient = useQueryClient();
@@ -119,6 +119,7 @@ function App() {
                   <div>{progressPercentage(task.subTasks)} %</div>
                 )}
               </div>
+              <SubTaskForm taskId={task.id} />
               {task.subTasks.length > 0 &&
                 task.subTasks.map((subTask) => (
                   <div className="flex flex-row items-center justify-between w-full">
