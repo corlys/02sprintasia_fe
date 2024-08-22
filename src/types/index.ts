@@ -30,6 +30,7 @@ export type SubTaskResponse = {
 export type TaskFormType = {
   title: string;
   description: string;
+  deadline?: string;
 };
 
 export type SubTaskFormType = {

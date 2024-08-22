@@ -100,6 +100,16 @@ function App() {
                 <div className="flex flex-col items-start justify-center">
                   <h2 className="text-xl font-bold">{task.title}</h2>
                   <p className="text-md font-semibold">{task.description}</p>
+                  {task.deadline && new Date() > new Date(task.deadline) && (
+                    <p className="text-md font-semibold text-red-300">
+                      Pass Deadline
+                    </p>
+                  )}
+                  {task.deadline && new Date() < new Date(task.deadline) && (
+                    <p className="text-md font-semibold text-green-300">
+                      Still Ontime
+                    </p>
+                  )}
                 </div>
                 <button
                   onClick={() => {
