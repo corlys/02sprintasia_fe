@@ -139,7 +139,7 @@ function App() {
                       }}
                       type="checkbox"
                       className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
-                      checked={task.status === "ongoing" ? false : true}
+                      defaultChecked={task.status === "ongoing" ? false : true}
                     />
                     <span className="ml-2 text-gray-700">{task.status}</span>
                   </label>
